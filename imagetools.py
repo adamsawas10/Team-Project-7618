@@ -39,4 +39,3 @@ def brightness(path):
     bright_img.save(new_path)
     return new_path
 
-brightness('Team-Project-7618/ladybug.jpeg')
