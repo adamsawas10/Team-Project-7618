@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Results</title>
+</head>
+<body>
+    <h1>Your Uploaded Images</h1>
+
+    {% for image in images %}
+        <img src="{{ image }}" width="250">
+    {% endfor %}
+
+    <br><br>
+    <a href="{{ url_for('index') }}">Upload more images</a>
+</body>
+</html>
