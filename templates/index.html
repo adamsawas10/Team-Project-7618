@@ -86,10 +86,23 @@
         {% endwith %}
 
         <form action="{{ url_for('upload_images') }}" method="POST" enctype="multipart/form-data">
-            <input type="file" name="images" id="images" accept="image/*" multiple required>
-            <br>
-            <button type="submit">Generate Collage</button>
-        </form>
+    <input type="file" name="images" id="images" accept="image/*" multiple required>
+    
+    <br>
+
+    <label for="filter">Choose a filter:</label>
+    <br>
+    <select name="filter" id="filter">
+        <option value="grayscale">Grayscale</option>
+        <option value="negative">Negative</option>
+        <option value="sepia">Sepia</option>
+        <option value="saturation">Saturation</option>
+    </select>
+
+    <br><br>
+
+    <button type="submit">Generate Collage</button>
+</form>
 
         <div id="preview"></div>
     </div>
