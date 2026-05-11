@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import os
 from werkzeug.utils import secure_filename
-from colorfiltersTEMP import grayscale, negative, sepia, saturation
+from colorfilters import grayscale, negative, sepia, saturation, selectivecolor
+from group_collage import collage
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'uploads')
@@ -18,6 +19,7 @@ def upload_images():
     files = request.files.getlist("images")
     valid_files = [file for file in files if file.filename != ""]
     selected_filter = request.form.get("filter")
+    target_color = request.form.get("target_color")
 
     if len(valid_files) < 3 or len(valid_files) > 10:
         flash("Please upload between 3 and 10 images.")
@@ -38,6 +40,8 @@ def upload_images():
             filtered_path = sepia(filepath)
         elif selected_filter == "saturation":
             filtered_path = saturation(filepath)
+        elif selected_filter == "selectivecolor":
+            filtered_path = selectivecolor(filepath, target_color)
         else:
             filtered_path = filepath
 
@@ -45,11 +49,14 @@ def upload_images():
 
     image_urls = []
 
-    for path in image_paths:
-        filename = os.path.basename(path)
-        image_urls.append(url_for("static", filename=f"uploads/{filename}"))
+    collage_image = collage(image_paths)
 
-    return render_template("results.html", images=image_urls)
+    collage_path = os.path.join(app.config["UPLOAD_FOLDER"], "final_collage.jpg")
+    collage_image.save(collage_path)
+
+    collage_url = url_for("static", filename="uploads/final_collage.jpg")
+
+    return render_template("results.html", collage_image=collage_url)
 
 if __name__ == '__main__':
     app.run(debug=True)
