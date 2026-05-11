@@ -39,3 +39,23 @@ def brightness(path):
     bright_img.save(new_path)
     return new_path
 
+def add_RGB(path, r_new, g_new,b_new):
+
+    img = Image.open(path).convert("RGB")
+    pixels = img.load()
+
+    width, height = img.size
+
+    for y in range(height):
+        for x in range(width):
+            r, g, b = pixels[x, y]
+
+            new_r = max(0, min(255, r + r_new))
+            new_g = max(0, min(255, g + g_new))
+            new_b = max(0, min(255, b + b_new))
+
+            pixels[x, y] = (new_r, new_g, new_b)
+
+    new_path = "temp.png"
+    img.save(new_path)
+    return new_path 
