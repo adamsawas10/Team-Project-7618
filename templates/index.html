@@ -70,6 +70,21 @@
             object-fit: cover;
             border-radius: 8px;
         }
+        
+        #new_r 
+        {
+            width: 40px;
+        }
+
+        #new_g 
+        {
+            width: 40px;
+        }
+
+        #new_b 
+        {
+            width: 40px;
+        }
     </style>
 </head>
 <body>
@@ -97,8 +112,11 @@
         <option value="negative">Negative</option>
         <option value="sepia">Sepia</option>
         <option value="saturation">Saturation</option>
+        <option value="brightness">Brightness</option>
+        <option value="add_RGB">Add RGB</option>
         <option value="selectivecolor">Selective Color</option>  <!-- ADD THIS -->
     </select>
+
 
     <br><br>
 
@@ -113,7 +131,17 @@
         <option value="purple">Purple</option>
     </select>
 
-    <br><br>
+    <br>
+
+
+    <label for="new_r">R:</label>
+    <input id="new_r" type="number" name="new_r" value ="0" />
+    <label for="new_g">G:</label>
+    <input id="new_g" type="number" name="new_g" value ="0"  />
+    <label for="new_b">B:</label>
+    <input id="new_b" type="number" name="new_b" value ="0" />
+    <br>
+
 
     <button type="submit">Generate Collage</button>
 </form>
