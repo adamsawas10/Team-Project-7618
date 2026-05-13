@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Results</title>
+
     <style>
         body {
             margin: 0;
@@ -9,9 +10,13 @@
             background: linear-gradient(135deg, #141e30, #243b55);
             color: white;
             min-height: 100vh;
-            display: center;
+
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+
+            padding: 20px;
         }
 
         #return {
@@ -21,71 +26,60 @@
             border-radius: 999px;
             color: white;
             font-size: 16px;
+            text-decoration: none;
             cursor: pointer;
+            margin-top: 20px;
         }
 
-        button:hover {
+        #return:hover {
             background: #0072ff;
         }
 
         .container {
             display: flex;
-            gap: 10px; 
-            }
-        #color1 {
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        #palette {
+            margin: 0;
+        }
+
+        .color-box {
             width: 40px;
             height: 40px;
-            background-color: {{c1}};
+            border-radius: 6px;
+            border: 1px solid white;
         }
 
-        #color2 {
-            width: 40px;
-            height: 40px;
-            background-color: {{c2}};
-        }
+        #color1 { background-color: {{c1}}; }
+        #color2 { background-color: {{c2}}; }
+        #color3 { background-color: {{c3}}; }
+        #color4 { background-color: {{c4}}; }
+        #color5 { background-color: {{c5}}; }
 
-        #color3 {
-            width: 40px;
-            height: 40px;
-            background-color: {{c3}};
-        }
-
-        #color4 {
-            width: 40px;
-            height: 40px;
-            background-color: {{c4}};
-        }
-
-        #color5 {
-            width: 40px;
-            height: 40px;
-            background-color: {{c5}};
-            
-        }
-    
-        #pallete
-        {
-            margin-bottom: 20px;
-        }
-
-
-    <style>
         .image-container {
             position: relative;
             display: inline-block;
+            margin-top: 20px;
         }
 
         .zoom-window {
             position: absolute;
             top: 0;
             left: 720px;
+
             width: 300px;
             height: 300px;
+
             border: 2px solid #333;
             overflow: hidden;
+
             display: none;
+
             background-repeat: no-repeat;
-            background-size: 2400px auto; /* Adjust zoom level */
+            background-size: 2400px auto;
             background-color: white;
         }
 
@@ -94,22 +88,13 @@
         }
     </style>
 </head>
+
 <body>
+
     <h1>Your Uploaded Images</h1>
-    <img src="{{ collage_image }}" width="700">
-    <br><br>
-    <a href="{{ url_for('index') }}" id="return">Upload more images</a>
-    <div class="container">
-    <h1 id= "pallete">Color pallete: </h1>
-    <div id="color1"> </div>
-    <div id="color2"> </div>
-    <div id="color3"> </div>
-    <div id="color4"> </div>
-    <div id="color5"> </div>
-    </div>
 
     <div class="image-container">
-        <img 
+        <img
             id="main-image"
             src="{{ collage_image }}"
             width="700"
@@ -118,8 +103,19 @@
         <div id="zoom-window" class="zoom-window"></div>
     </div>
 
-    <br><br>
-    <a href="{{ url_for('index') }}">Upload more images</a>
+    <div class="container">
+        <h2 id="palette">Color Palette:</h2>
+
+        <div id="color1" class="color-box"></div>
+        <div id="color2" class="color-box"></div>
+        <div id="color3" class="color-box"></div>
+        <div id="color4" class="color-box"></div>
+        <div id="color5" class="color-box"></div>
+    </div>
+
+    <a href="{{ url_for('index') }}" id="return">
+        Upload more images
+    </a>
 
     <script>
         const img = document.getElementById("main-image");
@@ -129,8 +125,10 @@
             zoomWindow.style.display = "block";
 
             const rect = img.getBoundingClientRect();
+
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
+
             const xPercent = (x / rect.width) * 100;
             const yPercent = (y / rect.height) * 100;
 
@@ -142,5 +140,6 @@
             zoomWindow.style.display = "none";
         });
     </script>
+
 </body>
 </html>
