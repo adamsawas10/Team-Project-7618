@@ -2,13 +2,68 @@
 <html>
 <head>
     <title>Results</title>
+
+    <style>
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .zoom-window {
+            position: absolute;
+            top: 0;
+            left: 720px;
+            width: 300px;
+            height: 300px;
+            border: 2px solid #333;
+            overflow: hidden;
+            display: none;
+            background-repeat: no-repeat;
+            background-size: 2400px auto; /* Adjust zoom level */
+            background-color: white;
+        }
+
+        #main-image {
+            cursor: crosshair;
+        }
+    </style>
 </head>
 <body>
     <h1>Your Uploaded Images</h1>
 
-    <img src="{{ collage_image }}" width="700">
+    <div class="image-container">
+        <img 
+            id="main-image"
+            src="{{ collage_image }}"
+            width="700"
+        >
+
+        <div id="zoom-window" class="zoom-window"></div>
+    </div>
 
     <br><br>
     <a href="{{ url_for('index') }}">Upload more images</a>
+
+    <script>
+        const img = document.getElementById("main-image");
+        const zoomWindow = document.getElementById("zoom-window");
+
+        img.addEventListener("mousemove", function(e) {
+            zoomWindow.style.display = "block";
+
+            const rect = img.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const xPercent = (x / rect.width) * 100;
+            const yPercent = (y / rect.height) * 100;
+
+            zoomWindow.style.backgroundImage = `url(${img.src})`;
+            zoomWindow.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
+        });
+
+        img.addEventListener("mouseleave", function() {
+            zoomWindow.style.display = "none";
+        });
+    </script>
 </body>
 </html>
