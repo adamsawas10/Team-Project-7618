@@ -1,5 +1,7 @@
 https://trello.com/b/glQHgmJz/team-project-7618
+
 https://github.com/adamsawas10/Team-Project-7618
+
 Run python file with terminal of choice
 
 Copy and paste the link for developmental server into URL
